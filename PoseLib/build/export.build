@@ -1,0 +1,6 @@
+$out_root/
+{
+  include PoseLib/
+}
+
+export $out_root/PoseLib/$import.target
