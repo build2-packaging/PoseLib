@@ -17,3 +17,11 @@
 # Use `binary` to make sure certain files are never auto-detected as text.
 #
 #*.png binary
+
+# To regenerate this list, run:
+#
+# find . -type l -xtype d | sort | sed -re 's%^./(.+)%\1 symlink=dir%'
+#
+PoseLib/PoseLib/misc symlink=dir
+PoseLib/PoseLib/robust symlink=dir
+PoseLib/PoseLib/solvers symlink=dir
