@@ -1,10 +1,31 @@
 intf_libs = # Interface dependencies.
 impl_libs = # Implementation dependencies.
-#import xxxx_libs += libhello%lib{hello}
+import intf_libs += Eigen%lib{Eigen}
 
-lib{PoseLib}: {hxx ixx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
+lib{PoseLib}: {hxx cxx}{** -poselib -version} hxx{poselib version} $impl_libs $intf_libs
 
-hxx{version}: in{version} $src_root/manifest
+headers =
+for h : {hxx}{** -version -poselib}
+{
+  headers += '#include <'$project/$directory($h)$name($h).h'>'
+}
+
+in.symbol = '@'
+
+hxx{poselib}: in{poselib}
+{
+  PROJECT_NAME_UPPERCASE = $string.ucase($project)
+  LIB_INCLUDES_STRING = $regex.merge($headers, '(.+)', '\1\n')
+}
+
+hxx{version}: in{version}
+{ 
+  PROJECT_NAME_UPPERCASE = $string.ucase($project)
+  MAJOR_VERSION = $version.major
+  MINOR_VERSION = $version.minor
+  PATCH_VERSION = $version.patch
+  PROJECT_VERSION = $version.project
+}
 
 # Build options.
 #
@@ -36,7 +57,7 @@ else
 # Install into the PoseLib/ subdirectory of, say, /usr/include/
 # recreating subdirectories.
 #
-{hxx ixx txx}{*}:
+{hxx}{*}:
 {
   install         = include/PoseLib/
   install.subdirs = true
