@@ -1,6 +1,6 @@
 : 1
 name: PoseLib-benchmark
-version: 2.0.5-a.0.z
+version: 2.0.5
 language: c++
 project: PoseLib
 summary: PoseLib-benchmark C++ executable
