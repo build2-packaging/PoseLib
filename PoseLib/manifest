@@ -4,11 +4,15 @@ version: 0.1.0-a.0.z
 type: lib
 language: c++
 summary: PoseLib C++ library
-license: other: proprietary ; Not free/open source.
+license: BSD 3-Clause
 description-file: README.md
-url: https://example.org/PoseLib
-email: Emil.Rosenquist@qualisys.se
-#build-error-email: Emil.Rosenquist@qualisys.se
+url: https://github.com/PoseLib/PoseLib
+email: Emil.Rosenquist@gmail.com
+#build-error-email: Emil.Rosenquist@gmail.com
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0
 depends: Eigen ^ 3.4.0
+
+builds: default
+build-include: *-msvc*-static*
+build-exclude: *-*msvc** ; Builds only as static lib with msvc.
