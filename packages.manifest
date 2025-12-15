@@ -1,2 +1,5 @@
 : 1
 location: PoseLib/
+
+:
+location: PoseLib-benchmark/
