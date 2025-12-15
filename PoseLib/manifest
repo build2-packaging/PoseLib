@@ -1,6 +1,6 @@
 : 1
 name: PoseLib
-version: 0.1.0-a.0.z
+version: 2.0.5-a.0.z
 type: lib
 language: c++
 summary: PoseLib C++ library
