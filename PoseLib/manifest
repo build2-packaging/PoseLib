@@ -3,7 +3,7 @@ name: PoseLib
 version: 2.0.5
 type: lib
 language: c++
-summary: PoseLib C++ library
+summary: PoseLib provides a collection of minimal solvers for camera pose estimation. 
 license: BSD 3-Clause
 description-file: README.md
 url: https://github.com/PoseLib/PoseLib
