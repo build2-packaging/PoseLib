@@ -4,18 +4,12 @@ import intf_libs += Eigen%lib{Eigen}
 
 lib{PoseLib}: {hxx cxx}{** -poselib -version} hxx{poselib version} $impl_libs $intf_libs
 
-headers =
-for h : {hxx}{** -poselib -version}
-{
-  headers += '#include <'$project/$directory($h)$name($h).h'>'
-}
-
 in.symbol = '@'
 
 hxx{poselib}: in{poselib}
 {
   PROJECT_NAME_UPPERCASE = $string.ucase($project)
-  LIB_INCLUDES_STRING = $regex.merge($headers, '(.+)', '\1\n')
+  LIB_INCLUDES_STRING = $regex.merge($path.relative($filesystem.path_search("$src_base/**.h"), $src_root), '(.+)', '#include <\1>\n')
 }
 
 hxx{version}: in{version}
