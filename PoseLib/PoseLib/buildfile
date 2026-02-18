@@ -2,7 +2,9 @@ intf_libs = # Interface dependencies.
 impl_libs = # Implementation dependencies.
 import intf_libs += Eigen%lib{Eigen}
 
-lib{PoseLib}: {hxx cxx}{** -poselib -version} hxx{poselib version} $impl_libs $intf_libs
+lib{PoseLib}: libul{PoseLib}: {hxx cxx}{** -poselib -version} hxx{poselib version} $impl_libs $intf_libs
+libs{PoseLib}: def{PoseLib}: include = ($cxx.target.system == 'win32-msvc')
+def{PoseLib}: libul{PoseLib}
 
 in.symbol = '@'
 
@@ -25,11 +27,14 @@ hxx{version}: in{version}
 #
 cxx.poptions =+ "-I$out_root" "-I$src_root"
 
-if ($cxx.target.system == 'win32-msvc')
-  obj{robust/bundle}: cxx.coptions += /bigobj#
+if ($cxx.target.system == 'mingw32')
+{
+  cxx.loptions += -Wl,--export-all-symbols
+  obj{**}: cxx.coptions += -Wa,-mbig-obj
+}
 
-obja{*}: cxx.poptions += -DPOSELIB_STATIC_BUILD
-objs{*}: cxx.poptions += -DPOSELIB_SHARED_BUILD
+if ($cxx.target.system == 'win32-msvc')
+  obj{**}: cxx.coptions += -bigobj
 
 # Export options.
 #
@@ -38,9 +43,6 @@ lib{PoseLib}:
   cxx.export.poptions = "-I$out_root" "-I$src_root"
   cxx.export.libs = $intf_libs
 }
-
-liba{PoseLib}: cxx.export.poptions += -DPOSELIB_STATIC
-libs{PoseLib}: cxx.export.poptions += -DPOSELIB_SHARED
 
 # For pre-releases use the complete version to make sure they cannot
 # be used in place of another pre-release or the final version. See
